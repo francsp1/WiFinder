@@ -46,7 +46,7 @@ def main():
 
 
     # wait for 3 minutes
-    time.sleep(15)  
+    time.sleep(16)  
     
     
     shutil.copy2(glob.glob('/tmp/wifite*/airodump-01.csv')[0], './')
