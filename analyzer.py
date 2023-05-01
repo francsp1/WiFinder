@@ -10,13 +10,13 @@ from pynput.keyboard import Controller, Key
 import pandas as pd
 import importlib
 
-def signal_handler(sig, frame):
+def sigint_handler(sig, frame):
     time.sleep(2)
     
 
 def main():
 
-    signal.signal(signal.SIGINT, signal_handler)    
+    signal.signal(signal.SIGINT, sigint_handler)    
     print("Hello world")
     # Clear stdout 
     sys.stdout.flush()

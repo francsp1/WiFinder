@@ -9,7 +9,6 @@ def analyzer():
     terminal = os.environ.get("XDG_TERMINAL", "x-terminal-emulator")
 
     # open a new terminal window and run the analizer script 
-    #subprocess.Popen([terminal, "-e", "bash", "-c", "python3 analyzer.py"])
     subprocess.Popen([terminal, "-e", "bash", "-c", "python3 analyzer.py"])
 
 
