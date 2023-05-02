@@ -27,7 +27,7 @@ def main():
     # Wait for 3 minutes
     time.sleep(15)
  
-    # Copy 
+    # Copy the airodump-ng file created via wifite from tmp directory
     shutil.copy2(glob.glob('/tmp/wifite*/airodump-01.csv')[0], './')
     time.sleep(2)  
 
