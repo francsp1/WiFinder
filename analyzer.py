@@ -22,10 +22,20 @@ def sigint_handler(sig, frame):
 
 def main():
 
-    signal.signal(signal.SIGINT, sigint_handler)    
+    signal.signal(signal.SIGINT, sigint_handler)   
+
+    print(" ___       ___    _____   _________    _____      __      _   ______      _____   ______    \n" + 
+          "(  (       )  )  (_   _) (_   _____)  (_   _)    /  \    / ) (_  __ \    / ___/  (   __ \   \n" +
+          " \  \  _  /  /     | |     ) (___       | |     / /\ \  / /    ) ) \ \  ( (__     ) (__) )  \n" + 
+          "  \  \/ \/  /      | |    (   ___)      | |     ) ) ) ) ) )   ( (   ) )  ) __)   (    __/   \n" + 
+          "   )   _   (       | |     ) (          | |    ( ( ( ( ( (     ) )  ) ) ( (       ) \ \  _  \n" + 
+          "   \  ( )  /      _| |__  (   )        _| |__  / /  \ \/ /    / /__/ /   \ \___  ( ( \ \_)) \n" + 
+          "    \_/ \_/      /_____(   \_/        /_____( (_/    \__/    (______/     \____\  )_) \__/  \n" ) 
+    
+    exit(0)
 
     dependencies = ['iw', 'hcxtools', 'hcxdumptool', 'macchanger']
- 
+    
     try:
         subprocess.check_output(['which', 'ifconfig'])
     except:
