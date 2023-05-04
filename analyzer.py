@@ -14,7 +14,8 @@ from git import Repo
 
 SCAN_TIME = 60
 AIRCRACK_REPO_PATH = "/home/pi/projeto/aircrack-ng"
-WIFI_ANALYZER_PATH = "/home/pi/projeto/wifi_analyzer"
+WIFINDER_PATH = "/home/pi/projeto/WiFinder"
+WIFITE_PATH = "/home/pi/projeto/wifite2/wifite.py"
 
 def sigint_handler(sig, frame):
     time.sleep(3)
@@ -51,7 +52,7 @@ def main():
 
    
 
-    if not os.path.isfile(os.path.join(WIFI_ANALYZER_PATH, 'installed.txt')):
+    if not os.path.isfile(os.path.join(WIFINDER_PATH, 'installed.txt')):
         # if the file doesn't exist, the program will remove the directory
         shutil.rmtree(AIRCRACK_REPO_PATH)
 
@@ -78,21 +79,21 @@ def main():
         # Run the make install command
         os.system("sudo make install")
 
-        file_path = os.path.join(WIFI_ANALYZER_PATH, "installed.txt")
+        file_path = os.path.join(WIFINDER_PATH, "installed.txt")
         with open(file_path, "w") as f:
-            f.write("Aircrack-ng for wifi analyzer is installed!")
+            f.write("Aircrack-ng for WiFinder is installed!")
 
         # Update the linker cache
         os.system("sudo ldconfig")
     else:
-        print("Aircrack-ng for wifi analyzer is installed!")
+        print("Aircrack-ng for WiFinder is installed!")
         time.sleep(2)
 
     # Clear stdout 
     sys.stdout.flush()
  
-    command = ["python3", "/home/pi/projeto/wifite2/wifite.py", "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only"]
-    #command = ["python3", "/home/pi/projeto/wifite2/wifite.py", "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid"]
+    command = ["python3", WIFITE_PATH, "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only"]
+    #command = ["python3", WIFITE_PATH, "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid"]
 
     wifite_process = subprocess.Popen(command)
         
