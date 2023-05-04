@@ -23,11 +23,26 @@ def sigint_handler(sig, frame):
 def main():
 
     signal.signal(signal.SIGINT, sigint_handler)    
-    print("Hello world")
 
-    
+    dependencies = ['iw', 'hcxtools', 'hcxdumptool', 'macchanger']
+ 
+    try:
+        subprocess.check_output(['which', 'ifconfig'])
+    except:
+        subprocess.check_call(['sudo', 'apt-get', 'install', '-y', 'net-tools'])
+
+    #we will check if it has the dependencies to run wifite, if not, it will install them
+    for dependency in dependencies:
+        try:
+            subprocess.check_output(['which', dependency])
+        except subprocess.CalledProcessError:
+            print(f'{dependency} is not installed. Installing...')
+            subprocess.check_call(['sudo', 'apt-get', 'install', '-y', dependency])
+
+   
+
     if not os.path.isfile(os.path.join(WIFI_ANALYZER_PATH, 'installed.txt')):
-        # Se o arquivo não existir, exclui todo o conteúdo do diretório
+        # if the file doesn't exist, the program will remove the directory
         shutil.rmtree(AIRCRACK_REPO_PATH)
 
         # Install the libtool package
@@ -66,8 +81,8 @@ def main():
     # Clear stdout 
     sys.stdout.flush()
  
-    #command = ["python3", "/home/pi/projeto/wifite2/wifite.py", "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only"]
-    command = ["python3", "/home/pi/projeto/wifite2/wifite.py", "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid"]
+    command = ["python3", "/home/pi/projeto/wifite2/wifite.py", "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only"]
+    #command = ["python3", "/home/pi/projeto/wifite2/wifite.py", "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid"]
 
     wifite_process = subprocess.Popen(command)
         
