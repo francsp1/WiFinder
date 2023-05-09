@@ -15,10 +15,33 @@ from git import Repo
 SCAN_TIME = 60
 AIRCRACK_REPO_PATH = "/home/pi/projeto/aircrack-ng"
 WIFINDER_PATH = "/home/pi/projeto/WiFinder"
-WIFITE_PATH = "/home/pi/projeto/wifite2/wifite.py"
+WIFITE_PATH = "/usr/sbin/wifite"
 
 def sigint_handler(sig, frame):
     time.sleep(3)
+    
+def install_dependencies():
+    try:
+        subprocess.check_output(['which', 'ifconfig'])
+    except:
+        print('ifconfig is not installed. Installing...')
+        subprocess.check_call(['sudo', 'apt-get', 'install', '-y', 'net-tools'])
+
+    try:
+        subprocess.check_output(['which', 'iw'])
+    except:
+        print('iw is not installed. Installing...')
+        subprocess.check_call(['sudo', 'apt-get', 'install', '-y', 'net-tools'])
+
+    dependencies = ['hcxdumptool', 'macchanger', 'wifite']
+    
+    #we will check if it has the dependencies to run wifite, if not, it will install them
+    for dependency in dependencies:
+        try:
+            subprocess.check_output(['which', dependency])
+        except subprocess.CalledProcessError:
+            print(f'{dependency} is not installed. Installing...')
+            subprocess.check_call(['sudo', 'apt-get', 'install', '-y', dependency])
     
 
 def main():
@@ -32,46 +55,39 @@ def main():
           "   )   _   (       | |     ) (          | |    ( ( ( ( ( (     ) )  ) ) ( (       ) \ \  _  \n" + 
           "   \  ( )  /      _| |__  (   )        _| |__  / /  \ \/ /    / /__/ /   \ \___  ( ( \ \_)) \n" + 
           "    \_/ \_/      /_____(   \_/        /_____( (_/    \__/    (______/     \____\  )_) \__/  \n" ) 
-    
+
+    install_dependencies()
     exit(0)
 
-    dependencies = ['iw', 'hcxtools', 'hcxdumptool', 'macchanger']
-    
-    try:
-        subprocess.check_output(['which', 'ifconfig'])
-    except:
-        subprocess.check_call(['sudo', 'apt-get', 'install', '-y', 'net-tools'])
-
-    #we will check if it has the dependencies to run wifite, if not, it will install them
-    for dependency in dependencies:
-        try:
-            subprocess.check_output(['which', dependency])
-        except subprocess.CalledProcessError:
-            print(f'{dependency} is not installed. Installing...')
-            subprocess.check_call(['sudo', 'apt-get', 'install', '-y', dependency])
-
-   
-
     if not os.path.isfile(os.path.join(WIFINDER_PATH, 'installed.txt')):
+        
         # if the file doesn't exist, the program will remove the directory
-        shutil.rmtree(AIRCRACK_REPO_PATH)
+        if os.path.exists(AIRCRACK_REPO_PATH):
+            shutil.rmtree(AIRCRACK_REPO_PATH)
 
         # Install the libtool package
         os.system("sudo apt-get install -y libtool")
 
         # Clone the repository using python-git library
         repo_url = "https://github.com/francsp1/aircrack-ng.git"
-        local_path = "/home/pi/projeto/aircrack-ng/"
-        Repo.clone_from(repo_url, local_path)
+        Repo.clone_from(repo_url, AIRCRACK_REPO_PATH)
+        
+        print("\n AQUIIIIIIIIIIIIIIIIIIIIII \n")
 
         # Change the working directory to "/home/pi/projeto/aircrack-ng"
-        os.chdir("/home/pi/projeto/aircrack-ng")
+        os.chdir(AIRCRACK_REPO_PATH)
 
         # Run the autoreconf command
         os.system("autoreconf -i")
 
+        print("\n AQUIIIIIIIIIIIIIIIIIIIIII  2 \n")
+
+
         # Run the configure command
-        os.system("./configure")
+        os.system("sudo ./configure")
+        
+        print("\n AQUIIIIIIIIIIIIIIIIIIIIII  3\n")
+
 
         # Run the make command
         os.system("make")
@@ -89,10 +105,12 @@ def main():
         print("Aircrack-ng for WiFinder is installed!")
         time.sleep(2)
 
+    exit(0)
+    
     # Clear stdout 
     sys.stdout.flush()
  
-    command = ["python3", WIFITE_PATH, "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only"]
+    command = [WIFITE_PATH, "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only"]
     #command = ["python3", WIFITE_PATH, "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid"]
 
     wifite_process = subprocess.Popen(command)
