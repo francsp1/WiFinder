@@ -65,8 +65,10 @@ def main():
         if os.path.exists(AIRCRACK_REPO_PATH):
             shutil.rmtree(AIRCRACK_REPO_PATH)
 
-        # Install the libtool package
+        # Install the libtool, libssl-dev and  libgcrypt-dev
         os.system("sudo apt-get install -y libtool")
+        os.system("sudo apt-get install -y libssl-dev")
+        os.system("sudo apt-get install -y libgcrypt-dev")
 
         # Clone the repository using python-git library
         repo_url = "https://github.com/francsp1/aircrack-ng.git"
@@ -106,7 +108,7 @@ def main():
         time.sleep(2)
 
     exit(0)
-    
+
     # Clear stdout 
     sys.stdout.flush()
  
