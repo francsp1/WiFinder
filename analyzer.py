@@ -30,7 +30,7 @@ def install_dependencies():
     try:
         subprocess.check_output(['which', 'iw'])
     except:
-        print('iw is not installed. Installing...')
+        print('iwconfig is not installed. Installing...')
         subprocess.check_call(['sudo', 'apt-get', 'install', '-y', 'net-tools'])
 
     dependencies = ['hcxdumptool', 'macchanger', 'wifite']
@@ -57,7 +57,6 @@ def main():
           "    \_/ \_/      /_____(   \_/        /_____( (_/    \__/    (______/     \____\  )_) \__/  \n" ) 
 
     install_dependencies()
-    exit(0)
 
     if not os.path.isfile(os.path.join(WIFINDER_PATH, 'installed.txt')):
         
@@ -65,7 +64,7 @@ def main():
         if os.path.exists(AIRCRACK_REPO_PATH):
             shutil.rmtree(AIRCRACK_REPO_PATH)
 
-        # Install the libtool, libssl-dev and  libgcrypt-dev
+        # Install the libtool, libssl-dev and  libgcrypt-dev necessary to compile aircrack-ng
         os.system("sudo apt-get install -y libtool")
         os.system("sudo apt-get install -y libssl-dev")
         os.system("sudo apt-get install -y libgcrypt-dev")
@@ -74,23 +73,15 @@ def main():
         repo_url = "https://github.com/francsp1/aircrack-ng.git"
         Repo.clone_from(repo_url, AIRCRACK_REPO_PATH)
         
-        print("\n AQUIIIIIIIIIIIIIIIIIIIIII \n")
-
         # Change the working directory to "/home/pi/projeto/aircrack-ng"
         os.chdir(AIRCRACK_REPO_PATH)
 
         # Run the autoreconf command
         os.system("autoreconf -i")
 
-        print("\n AQUIIIIIIIIIIIIIIIIIIIIII  2 \n")
-
-
         # Run the configure command
         os.system("sudo ./configure")
         
-        print("\n AQUIIIIIIIIIIIIIIIIIIIIII  3\n")
-
-
         # Run the make command
         os.system("make")
 
@@ -107,12 +98,12 @@ def main():
         print("Aircrack-ng for WiFinder is installed!")
         time.sleep(2)
 
-    exit(0)
+    #exit(0)
 
     # Clear stdout 
     sys.stdout.flush()
  
-    command = [WIFITE_PATH, "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only"]
+    command = [WIFITE_PATH, "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only", "-i wlan1"]
     #command = ["python3", WIFITE_PATH, "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid"]
 
     wifite_process = subprocess.Popen(command)
