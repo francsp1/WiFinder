@@ -103,11 +103,12 @@ def main():
     # Clear stdout 
     sys.stdout.flush()
  
-    command = [WIFITE_PATH, "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only", "-i wlan1"]
+    command = [WIFITE_PATH, "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only"]
     #command = ["python3", WIFITE_PATH, "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid"]
 
     wifite_process = subprocess.Popen(command)
-        
+    
+    print("BONITOoOOOOOOOOOOOOOOOOOOOOOOOO\n")
     # Wait for 3 minutes
     time.sleep(SCAN_TIME)
  
