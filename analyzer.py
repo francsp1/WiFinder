@@ -10,6 +10,8 @@ from pynput.keyboard import Controller, Key
 import pandas as pd
 import importlib
 from git import Repo
+import time
+import pyttsx3
 
 
 SCAN_TIME = 60
@@ -47,6 +49,15 @@ def install_dependencies():
 def main():
 
     signal.signal(signal.SIGINT, sigint_handler)   
+
+    # Create an instance of the pyttsx3 library object
+    engine = pyttsx3.init()
+
+    # Make Python speak:
+    engine.say("The WiFinder program is starting")
+
+    # Wait for the speech to complete
+    engine.runAndWait()
 
     print(" ___       ___    _____   _________    _____      __      _   ______      _____   ______    \n" + 
           "(  (       )  )  (_   _) (_   _____)  (_   _)    /  \    / ) (_  __ \    / ___/  (   __ \   \n" +
@@ -108,13 +119,18 @@ def main():
 
     wifite_process = subprocess.Popen(command)
     
-    print("BONITOoOOOOOOOOOOOOOOOOOOOOOOOO\n")
     # Wait for 3 minutes
     time.sleep(SCAN_TIME)
  
     # Copy the airodump-ng file created via wifite from tmp directory
     shutil.copy2(glob.glob('/tmp/wifite*/airodump-01.csv')[0], './')
     time.sleep(2)  
+    
+    # Make Python speak:
+    engine.say("The scan of all networks is complete. We will start capturing the handshakes.")
+
+    # Wait for the speech to complete
+    engine.runAndWait()
 
     # Send the CTRL + C keystroke to stop scanning and "all" to attack all networks
     keyboard = Controller()
