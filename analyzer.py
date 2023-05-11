@@ -12,7 +12,7 @@ import importlib
 from git import Repo
 import time
 import pyttsx3
-
+import threading
 
 SCAN_TIME = 60
 AIRCRACK_REPO_PATH = "/home/pi/projeto/aircrack-ng"
@@ -44,7 +44,28 @@ def install_dependencies():
         except subprocess.CalledProcessError:
             print(f'{dependency} is not installed. Installing...')
             subprocess.check_call(['sudo', 'apt-get', 'install', '-y', dependency])
-    
+
+
+def remove_clients_info_csv_file():
+    file_path = 'airodump-01.csv'
+    target_line = 'Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs'
+    temp_file_path = file_path + '.tmp'
+
+    with open(file_path, 'r') as file_in, open(temp_file_path, 'w') as file_out:
+        found_target_line = False
+        for line in file_in:
+            if line.strip() == target_line:
+                found_target_line = True
+                break
+            file_out.write(line)
+
+    if found_target_line:
+        os.replace(temp_file_path, file_path)
+        #print("Content removed successfully.")
+    else:
+        os.remove(temp_file_path)
+        #print("Target line not found in the file.")
+    pass
 
 def main():
 
@@ -125,7 +146,11 @@ def main():
     # Copy the airodump-ng file created via wifite from tmp directory
     shutil.copy2(glob.glob('/tmp/wifite*/airodump-01.csv')[0], './')
     time.sleep(2)  
-    
+
+    # Create a thread and run the function
+    thread = threading.Thread(target=remove_clients_info_csv_file)
+    thread.start()
+
     # Make Python speak:
     engine.say("The scan of all networks is complete. We will start capturing the handshakes.")
 
