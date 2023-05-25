@@ -46,8 +46,7 @@ def install_dependencies():
             subprocess.check_call(['sudo', 'apt-get', 'install', '-y', dependency])
 
 
-def remove_clients_info_csv_file():
-    file_path = 'airodump-01.csv'
+def remove_clients_info_csv_file(file_path):
     target_line = 'Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs'
     temp_file_path = file_path + '.tmp'
 
@@ -61,10 +60,10 @@ def remove_clients_info_csv_file():
 
     if found_target_line:
         os.replace(temp_file_path, file_path)
-        #print("Content removed successfully.")
+        print("Content removed successfully.")
     else:
         os.remove(temp_file_path)
-        #print("Target line not found in the file.")
+        print("Target line not found in the file.")
     pass
 
 def main():
@@ -135,7 +134,7 @@ def main():
     # Clear stdout 
     sys.stdout.flush()
  
-    command = [WIFITE_PATH, "--all", "--kill", "-i", "wlan1", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only"]
+    command = [WIFITE_PATH, "--all", "--kill", "-i", "wlan0", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only"]
     #command = ["python3", WIFITE_PATH, "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid"]
 
     wifite_process = subprocess.Popen(command)
@@ -145,11 +144,14 @@ def main():
  
     # Copy the airodump-ng file created via wifite from tmp directory
     shutil.copy2(glob.glob('/tmp/wifite*/airodump-01.csv')[0], './')
-    time.sleep(2)  
-
-    # Create a thread and run the function
-    thread = threading.Thread(target=remove_clients_info_csv_file)
+    filename = time.strftime("%Y_%m_%d_%H_%M_%S.csv")
+    os.rename("airodump-01.csv", filename)
+      
+    # Create a thread to remove unnecessary info (clients) from the csv file
+    thread = threading.Thread(target=remove_clients_info_csv_file(filename))
     thread.start()
+
+    time.sleep(3)
 
     # Make Python speak:
     engine.say("The scan of all networks is complete. We will start capturing the handshakes.")
