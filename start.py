@@ -35,10 +35,22 @@ def exit_program():
 def main():
     # Create the GUI window
     root = tk.Tk()
-
-    #define o título da janela
+    
+    # Define o título da janela
     root.title("WiFinder")
-    root.geometry("300x400") # define o tamanho da janela
+
+    screen_width = root.winfo_screenwidth()
+    screen_height = 415 #root.winfo_screenheight()
+
+    # Calculate the dynamic window size based on the screen dimensions
+    window_width = int(screen_width / 4)
+    window_height = screen_height
+
+    # Set the window size
+    window_size = f"{window_width}x{window_height}"
+    root.geometry(window_size)
+
+    root.geometry(f"+0+0")
 
     # adiciona o logotipo
     logo_image = Image.open("assets/capturar.png")  # substitua "logo.png" pelo nome do seu arquivo de imagem
@@ -47,7 +59,8 @@ def main():
     logo_label.pack(side="top", pady=10)
 
     start_button = tk.Button(root, text="Start", width=15, height=2, command=lambda: start_program(root))
-    start_button.pack(pady=20) # adiciona o botão "Start" na janela
+    start_button.pack()
+
 
     #details_button = tk.Button(root, text="Detalhes", width=15, height=2, command=show_details(root))
     details_button = tk.Button(root, text="Detalhes", width=15, height=2, command=lambda: show_details(root))
