@@ -14,7 +14,7 @@ import time
 import pyttsx3
 import threading
 
-SCAN_TIME = 60
+SCAN_TIME = 180
 AIRCRACK_REPO_PATH = "/home/pi/projeto/aircrack-ng"
 WIFINDER_PATH = "/home/pi/projeto/WiFinder"
 WIFITE_PATH = "/usr/sbin/wifite"
@@ -133,7 +133,7 @@ def main():
     # Clear stdout 
     sys.stdout.flush()
  
-    command = [WIFITE_PATH, "--all", "--kill", "-i", "wlan1", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only"]
+    command = [WIFITE_PATH, "--all", "--kill", "-i", "wlan1", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only", "-pow", "25", "--wpat", "180", ]
 
     wifite_process = subprocess.Popen(command)
     

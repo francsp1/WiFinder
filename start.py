@@ -116,7 +116,7 @@ def main():
     #if the switch's on, led's green and the programm starts, else the programm doesn't start and the led stays red
     if GPIO.input(switch_pin) == GPIO.HIGH: # ON 
         start_program(root)
-        set_led_green()
+        #set_led_green()
     else: 
         set_led_red()
         
