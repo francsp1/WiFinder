@@ -42,7 +42,6 @@ def install_dependencies():
 
 def remove_empty_lines(file_path):
     if not os.path.isfile(file_path):
-        print("{} does not exist ".format(file_path))
         return
     with open(file_path) as filehandle:
         lines = filehandle.readlines()
