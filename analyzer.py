@@ -41,13 +41,17 @@ def install_dependencies():
             subprocess.check_call(['sudo', 'apt-get', 'install', '-y', dependency])
 
 def remove_empty_lines(file_path):
+    # Read the file and store its content in a list
     with open(file_path, 'r') as file:
         lines = file.readlines()
 
-    non_empty_lines = [line for line in lines if line.strip()]
+    # Remove empty lines from the list
+    lines = [line for line in lines if line.strip() != '']
 
+    # Write the modified lines back to the file
     with open(file_path, 'w') as file:
-        file.writelines(non_empty_lines)
+        file.writelines(lines)
+
 
 def remove_clients_info_csv_file(file_path):
     target_line = 'Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs'
@@ -63,10 +67,10 @@ def remove_clients_info_csv_file(file_path):
 
     if found_target_line:
         os.replace(temp_file_path, file_path)
-        #print("Content removed successfully.")
+        # Content removed successfully
     else:
         os.remove(temp_file_path)
-        #print("Target line not found in the file.")
+        # Target line not found in the file
     
     remove_empty_lines(file_path)
 
