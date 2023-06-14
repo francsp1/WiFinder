@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import signal
 import os
 import sys
 import subprocess
@@ -7,20 +6,16 @@ import time
 import glob
 import shutil
 from pynput.keyboard import Controller, Key
-import pandas as pd
-import importlib
 from git import Repo
 import time
 import pyttsx3
 import threading
 
-SCAN_TIME = 180
+SCAN_TIME = 60
 AIRCRACK_REPO_PATH = "/home/pi/projeto/aircrack-ng"
 WIFINDER_PATH = "/home/pi/projeto/WiFinder"
 WIFITE_PATH = "/usr/sbin/wifite"
 
-def sigint_handler(sig, frame):
-    time.sleep(3)
     
 def install_dependencies():
     try:
@@ -60,15 +55,13 @@ def remove_clients_info_csv_file(file_path):
 
     if found_target_line:
         os.replace(temp_file_path, file_path)
-        print("Content removed successfully.")
+        #print("Content removed successfully.")
     else:
         os.remove(temp_file_path)
-        print("Target line not found in the file.")
+        #print("Target line not found in the file.")
     pass
 
 def main():
-
-    signal.signal(signal.SIGINT, sigint_handler)   
 
     # Create an instance of the pyttsx3 library object
     engine = pyttsx3.init()
@@ -133,7 +126,8 @@ def main():
     # Clear stdout 
     sys.stdout.flush()
  
-    command = [WIFITE_PATH, "--all", "--kill", "-i", "wlan0", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only", "-pow", "25", "--wpat", "180", "-p", SCAN_TIME]
+    #command = [WIFITE_PATH, "--all", "--kill", "-i", "wlan0", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only", "-pow", "25", "--wpat", "180", "-p", str(SCAN_TIME)]
+    command = [WIFITE_PATH, "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only", "-pow", "25", "--wpat", "180", "-p", str(SCAN_TIME)]
 
     wifite_process = subprocess.Popen(command)
     
@@ -158,13 +152,13 @@ def main():
     #engine.runAndWait()
 
     # Send the CTRL + C keystroke to stop scanning and "all" to attack all networks
-    keyboard = Controller()
-    keyboard.press(Key.ctrl)
-    keyboard.press('c')
-    keyboard.release('c')
-    keyboard.release(Key.ctrl)
-    time.sleep(3)
-    keyboard.type('all\n')
+    # keyboard = Controller()
+    # keyboard.press(Key.ctrl)
+    # keyboard.press('c')
+    # keyboard.release('c')
+    # keyboard.release(Key.ctrl)
+    # time.sleep(3)
+    # keyboard.type('all\n')
 
     wifite_process.wait()
  
