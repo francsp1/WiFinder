@@ -41,14 +41,20 @@ def install_dependencies():
             subprocess.check_call(['sudo', 'apt-get', 'install', '-y', dependency])
 
 def remove_empty_lines(file_path):
-    if not os.path.isfile(file_path):
-        return
-    with open(file_path) as filehandle:
-        lines = filehandle.readlines()
+    # Read the file and store its content in a list
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
 
-    with open(file_path, 'w') as filehandle:
-        lines = filter(lambda x: x.strip(), lines)
-        filehandle.writelines(lines)  
+    # Remove empty lines from the list
+    lines = [line for line in lines if line.strip() != '']
+
+    # Remove newline character from the last line
+    if lines:
+        lines[-1] = lines[-1].rstrip()
+
+    # Write the modified lines back to the file
+    with open(file_path, 'w') as file:
+        file.writelines(line.rstrip() + '\n' for line in lines)
 
 
 def remove_clients_info_csv_file(file_path):
