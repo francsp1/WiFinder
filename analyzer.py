@@ -133,7 +133,7 @@ def main():
     # Clear stdout 
     sys.stdout.flush()
  
-    command = [WIFITE_PATH, "--all", "--kill", "-i", "wlan1", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only", "-pow", "25", "--wpat", "180", ]
+    command = [WIFITE_PATH, "--all", "--kill", "-i", "wlan0", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only", "-pow", "25", "--wpat", "180", "-p", SCAN_TIME]
 
     wifite_process = subprocess.Popen(command)
     
