@@ -48,6 +48,10 @@ def remove_empty_lines(file_path):
     # Remove empty lines from the list
     lines = [line for line in lines if line.strip() != '']
 
+    # Check if the last line is empty and remove it
+    if lines and lines[-1].strip() == '':
+        lines = lines[:-1]
+
     # Write the modified lines back to the file
     with open(file_path, 'w') as file:
         file.writelines(lines)
