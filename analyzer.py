@@ -54,7 +54,7 @@ def remove_empty_lines(file_path):
 
     # Write the modified lines back to the file
     with open(file_path, 'w') as file:
-        file.writelines(lines)
+        file.writelines(line.rstrip() + '\n' for line in lines)
 
 
 def remove_clients_info_csv_file(file_path):
