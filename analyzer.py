@@ -5,7 +5,6 @@ import subprocess
 import time
 import glob
 import shutil
-from pynput.keyboard import Controller, Key
 from git import Repo
 import time
 import pyttsx3
