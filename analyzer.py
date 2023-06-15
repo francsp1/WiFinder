@@ -79,12 +79,6 @@ def main():
     # Create an instance of the pyttsx3 library object
     engine = pyttsx3.init()
 
-    # Make Python speak:
-    #engine.say("The WiFinder program is starting")
-
-    # Wait for the speech to complete
-    #engine.runAndWait()
-
     #Banner of our programm
     print(" ___       ___    _____   _________    _____      __      _   ______      _____   ______    \n" + 
           "(  (       )  )  (_   _) (_   _____)  (_   _)    /  \    / ) (_  __ \    / ___/  (   __ \   \n" +
@@ -157,21 +151,6 @@ def main():
     thread.start()
 
     time.sleep(3)
-
-    # Make Python speak:
-    # engine.say("The scan of all networks is complete. We will start capturing the handshakes.")
-
-    # Wait for the speech to complete
-    #engine.runAndWait()
-
-    # Send the CTRL + C keystroke to stop scanning and "all" to attack all networks
-    # keyboard = Controller()
-    # keyboard.press(Key.ctrl)
-    # keyboard.press('c')
-    # keyboard.release('c')
-    # keyboard.release(Key.ctrl)
-    # time.sleep(3)
-    # keyboard.type('all\n')
 
     wifite_process.wait()
  
