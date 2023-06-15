@@ -133,7 +133,7 @@ def main():
  
     # Copy the airodump-ng file created via wifite from tmp directory
     shutil.copy2(glob.glob('/tmp/wifite*/airodump-01.csv')[0], './')
-    filename = time.strftime("%Y_%m_%d_%H_%M_%S.csv")
+    filename = time.strftime("%d-%m-%Y_%H:%M:%S.csv")
     os.rename("airodump-01.csv", filename)
       
     # Create a thread to remove unnecessary info (clients) from the csv file
