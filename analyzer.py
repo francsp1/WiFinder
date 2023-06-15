@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 import os
-import sys
 import subprocess
 import time
 import glob
 import shutil
 from git import Repo
 import time
-import pyttsx3
 import threading
 
 SCAN_TIME = 60
@@ -74,10 +72,7 @@ def remove_clients_info_csv_file(file_path):
     remove_empty_lines(file_path)
 
 def main():
-
-    # Create an instance of the pyttsx3 library object
-    engine = pyttsx3.init()
-
+    
     #Banner of our programm
     print(" ___       ___    _____   _________    _____      __      _   ______      _____   ______    \n" + 
           "(  (       )  )  (_   _) (_   _____)  (_   _)    /  \    / ) (_  __ \    / ___/  (   __ \   \n" +
@@ -128,9 +123,6 @@ def main():
     else:
         print("Aircrack-ng for WiFinder is installed!")
         time.sleep(2)
-
-    # Clear stdout 
-    sys.stdout.flush()
  
     command = [WIFITE_PATH, "--all", "--kill", "-i", "wlan1", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only", "-pow", "25", "--wpat", "180", "-p", str(SCAN_TIME)]
     # command = [WIFITE_PATH, "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only", "-pow", "25", "--wpat", "180", "-p", str(SCAN_TIME)]
