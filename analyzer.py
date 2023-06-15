@@ -5,7 +5,6 @@ import time
 import glob
 import shutil
 from git import Repo
-import time
 import threading
 
 SCAN_TIME = 60
@@ -72,7 +71,7 @@ def remove_clients_info_csv_file(file_path):
     remove_empty_lines(file_path)
 
 def main():
-    
+
     #Banner of our programm
     print(" ___       ___    _____   _________    _____      __      _   ______      _____   ______    \n" + 
           "(  (       )  )  (_   _) (_   _____)  (_   _)    /  \    / ) (_  __ \    / ___/  (   __ \   \n" +
