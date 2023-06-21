@@ -57,7 +57,7 @@ def start_program(root):
     print("Programa iniciado!")
 
 def send_csvs(root):
-    show_details()
+    show_details(root)
     return
 
 
