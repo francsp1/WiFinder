@@ -8,12 +8,11 @@ from git import Repo
 import threading
 
 SCAN_TIME = 60
-AIRCRACK_REPO_PATH = os.path.expanduser("~/projeto/aircrack-ng")
-WIFINDER_PATH = os.path.expanduser("~/projeto/WiFinder")
-CSV_DIRECTORY = os.path.expanduser("./csv")
+HOME_PI_PROJETO = "/home/pi/projeto"
+AIRCRACK_REPO_PATH = HOME_PI_PROJETO + "/aircrack-ng"
+WIFINDER_PATH = HOME_PI_PROJETO + "/WiFinder"
+CSV_DIRECTORY = WIFINDER_PATH + "/csv"
 
-
-    
 def install_dependencies():
     try:
         subprocess.check_output(['which', 'ifconfig'])
