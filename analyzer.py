@@ -8,9 +8,10 @@ from git import Repo
 import threading
 
 SCAN_TIME = 60
-AIRCRACK_REPO_PATH = "/home/pi/projeto/aircrack-ng"
-WIFINDER_PATH = "/home/pi/projeto/WiFinder"
-WIFITE_PATH = "/usr/sbin/wifite"
+AIRCRACK_REPO_PATH = "~/projeto/aircrack-ng"
+WIFINDER_PATH = "~/projeto/WiFinder"
+CSV_DIRECTORY = "./csv"
+
 
     
 def install_dependencies():
@@ -83,6 +84,10 @@ def main():
 
     install_dependencies()
 
+    if not os.path.exists(CSV_DIRECTORY):
+        os.makedirs(CSV_DIRECTORY)
+
+
     if not os.path.isfile(os.path.join(WIFINDER_PATH, 'installed.txt')):
         
         # if the file doesn't exist, the program will remove the directory
@@ -123,7 +128,7 @@ def main():
         print("Aircrack-ng for WiFinder is installed!")
         time.sleep(2)
  
-    command = [WIFITE_PATH, "--all", "--kill", "-i", "wlan1", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only", "-pow", "25", "--wpat", "180", "-p", str(SCAN_TIME)]
+    command = ["wifite", "--all", "--kill", "-i", "wlan1", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only", "-pow", "25", "--wpat", "180", "-p", str(SCAN_TIME)]
     # command = [WIFITE_PATH, "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only", "-pow", "25", "--wpat", "180", "-p", str(SCAN_TIME)]
 
     wifite_process = subprocess.Popen(command)
