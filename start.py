@@ -66,8 +66,8 @@ def send_csvs(root):
 def show_details(root):
     window = tk.Toplevel(root)
     label = tk.Label(window, text="Código desenvolvido por: Francisco Pedrosa e Rodrigo Vitorino \n" + 
-                                "Desenvolvido no âmbito do Projeto Informático, no IPLeiria. \n \n" +
-                                                        "2022/2023")
+                                  "Desenvolvido no âmbito do Projeto Informático, no IPLeiria. \n \n" +
+                                  "2022/2023")
     label.pack()
 
 # Function that will exit the program
