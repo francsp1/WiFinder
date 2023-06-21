@@ -8,10 +8,9 @@ from git import Repo
 import threading
 
 SCAN_TIME = 60
-HOME_PI_PROJETO = "/home/pi/projeto"
-AIRCRACK_REPO_PATH = HOME_PI_PROJETO + "/aircrack-ng"
-WIFINDER_PATH = HOME_PI_PROJETO + "/WiFinder"
-CSV_DIRECTORY = WIFINDER_PATH + "/csv"
+AIRCRACK_REPO_PATH = "/home/pi/projeto/aircrack-ng"
+WIFINDER_PATH      = "/home/pi/projeto/WiFinder"
+CSV_DIRECTORY      = "/home/pi/projeto/WiFinder/csv"
 
 def install_dependencies():
     try:
@@ -130,13 +129,15 @@ def main():
     command = ["wifite", "--all", "--kill", "-i", "wlan1", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only", "-pow", "25", "--wpat", "180", "-p", str(SCAN_TIME)]
     # command = [WIFITE_PATH, "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only", "-pow", "25", "--wpat", "180", "-p", str(SCAN_TIME)]
 
+    print(os.getcwd())
+
     wifite_process = subprocess.Popen(command)
     
     # Wait for 3 minutes
     time.sleep(SCAN_TIME)
  
     # Copy the airodump-ng file created via wifite from tmp directory to WiFinder csv's directory 
-    shutil.copy2(glob.glob('/tmp/wifite*/airodump-01.csv')[0], "/home/pi/projeto/WiFinder/csv/")
+    shutil.copy2(glob.glob('/tmp/wifite*/airodump-01.csv')[0], "/home/pi/projeto/WiFinder/csv")
     filename = time.strftime("%d-%m-%Y_%H:%M:%S.csv")
     os.rename("/home/pi/projeto/WiFinder/csv/airodump-01.csv", filename)
       
