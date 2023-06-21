@@ -8,9 +8,9 @@ from git import Repo
 import threading
 
 SCAN_TIME = 60
-AIRCRACK_REPO_PATH = "~/projeto/aircrack-ng"
-WIFINDER_PATH = "~/projeto/WiFinder"
-CSV_DIRECTORY = "./csv"
+AIRCRACK_REPO_PATH = os.path.expanduser("~/projeto/aircrack-ng")
+WIFINDER_PATH = os.path.expanduser("~/projeto/WiFinder")
+CSV_DIRECTORY = os.path.expanduser("./csv")
 
 
     
