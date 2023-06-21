@@ -112,16 +112,16 @@ def main():
     start_button.pack()
 
     # create and add a button labeled "Send CSV's"
-    start_button = tk.Button(root, text="Send CSV's", width=15, height=2, command=lambda: send_csvs(root))
-    start_button.pack()
+    send_csvs_button = tk.Button(root, text="Send CSV's", width=15, height=2, command=lambda: send_csvs(root))
+    send_csvs_button.pack()
 
     # create and add a button labeled "About"
-    details_button = tk.Button(root, text="About", width=15, height=2, command=lambda: show_details(root))
-    details_button.pack() 
+    about_button = tk.Button(root, text="About", width=15, height=2, command=lambda: show_details(root))
+    about_button.pack() 
     
     # create and add a button labeled "Exit"
-    details_button = tk.Button(root, text="Exit", width=15, height=2, command=lambda: exit_program())
-    details_button.pack()
+    exit_button = tk.Button(root, text="Exit", width=15, height=2, command=lambda: exit_program())
+    exit_button.pack()
     
     #if the switch's on, led's green and the programm starts, else the programm doesn't start and the led stays red
     if GPIO.input(switch_pin) == GPIO.HIGH: # ON 
