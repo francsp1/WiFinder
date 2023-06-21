@@ -55,6 +55,12 @@ def start_program(root):
     # open a new terminal window and run the analizer script 
     process = subprocess.Popen([terminal, "-e", "bash", "-c", "python3 analyzer.py"])
     print("Programa iniciado!")
+
+def send_csvs(root):
+    show_details()
+    return
+
+
     
 # Shows a window with the info about who develop the code
 def show_details(root):
@@ -103,6 +109,10 @@ def main():
 
     # create and add a button labeled "Start"
     start_button = tk.Button(root, text="Start", width=15, height=2, command=lambda: start_program(root))
+    start_button.pack()
+
+    # create and add a button labeled "Send CSV's"
+    start_button = tk.Button(root, text="Send CSV's", width=15, height=2, command=lambda: send_csvs(root))
     start_button.pack()
 
     # create and add a button labeled "About"
