@@ -116,7 +116,7 @@ def main():
         os.system("make")
 
         # Run the make install command
-        os.system("sudo make install")
+        os.system("make install")
 
         file_path = os.path.join(WIFINDER_PATH, "installed.txt")
         with open(file_path, "w") as f:
