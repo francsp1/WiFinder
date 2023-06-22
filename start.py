@@ -6,6 +6,7 @@ import tkinter as tk
 from PIL import Image, ImageTk #(do the import of the ImageTk module)
 import RPi.GPIO as GPIO 
 import requests
+import shutil
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -67,17 +68,20 @@ def start_program(root):
 
 def send_csvs():
     try:
+        # Check if the API is running 
         response = requests.get(API_URL_CHECK, timeout=API_TIMEOUT)
-        if response.status_code == 200:
-            for file_name in os.listdir(CSV_DIR):
+        if response.status_code == 200: # If the script has connectivity with the API the csv files will be sent
+            for file_name in os.listdir(CSV_DIR): # For each file in csv directory
                 file_path = os.path.join(CSV_DIR, file_name)
                 if os.path.isfile(file_path):
                     files = {
                         'file': (file_name, open(file_path, 'rb'), 'text/csv')
                     }
-                    response = requests.post(API_URL_UPLOAD, files=files)
+                    response = requests.post(API_URL_UPLOAD, files=files) #Send file
                     if response.status_code == 200:
                         print(f"CSV file '{file_name}' uploaded successfully")
+                        # Move the file to the sent CSV directory
+                        shutil.move(file_path, os.path.join(SENT_CSV_DIR, file_name)) # Move file to sent_csv directory
                     else:
                         print(f"Error uploading CSV file '{file_name}'. Status Code:", response.status_code)
         else:
