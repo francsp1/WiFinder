@@ -28,6 +28,7 @@ process = None
 API_IP = '192.168.1.83' 
 API_PORT = 3000  
 API_URL = f'http://{API_IP}:{API_PORT}/check'
+API_TIMEOUT = 5
 
 
 def set_led_red():
@@ -63,7 +64,7 @@ def start_program(root):
 
 def send_csvs(root):
     try:
-        response = requests.get(API_URL)
+        response = requests.get(API_URL, timeout=API_TIMEOUT)
         if response.status_code == 200:
             print("API is running successfully")
             show_details(root)
