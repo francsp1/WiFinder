@@ -151,7 +151,7 @@ def main():
     else: 
         set_led_red()
         
-    send_csvs(root)
+    send_csvs()
 
     # Run the GUI event loop
     root.mainloop()
