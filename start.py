@@ -73,8 +73,13 @@ def send_csvs():
                     files = {
                         'file': (file_name, open(file_path, 'rb'), 'text/csv')
                     }
-                    requests.post(API_URL, files=files)
-
+                    response = requests.post(API_URL, files=files)
+                    if response.status_code == 200:
+                        print(f"CSV file '{file_name}' uploaded successfully")
+                    else:
+                        print(f"Error uploading CSV file '{file_name}'. Status Code:", response.status_code)
+        else:
+            print("API is not running or returned an error")
     except requests.exceptions.RequestException as e:
         print("Error occurred while connecting to the API:", e)
 
