@@ -27,7 +27,8 @@ process = None
 
 API_IP = '192.168.1.83' 
 API_PORT = 3000  
-API_URL = f'http://{API_IP}:{API_PORT}/check'
+API_URL_CHECK = f'http://{API_IP}:{API_PORT}/check'
+API_URL_UPLOAD = f'http://{API_IP}:{API_PORT}/upload'
 API_TIMEOUT = 5
 CSV_DIR= "/home/pi/projeto/WiFinder/csv"
 
@@ -65,7 +66,7 @@ def start_program(root):
 
 def send_csvs():
     try:
-        response = requests.get(API_URL, timeout=API_TIMEOUT)
+        response = requests.get(API_URL_CHECK, timeout=API_TIMEOUT)
         if response.status_code == 200:
             for file_name in os.listdir(CSV_DIR):
                 file_path = os.path.join(CSV_DIR, file_name)
@@ -73,7 +74,7 @@ def send_csvs():
                     files = {
                         'file': (file_name, open(file_path, 'rb'), 'text/csv')
                     }
-                    response = requests.post(API_URL, files=files)
+                    response = requests.post(API_URL_UPLOAD, files=files)
                     if response.status_code == 200:
                         print(f"CSV file '{file_name}' uploaded successfully")
                     else:
