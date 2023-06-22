@@ -29,6 +29,7 @@ API_IP = '192.168.1.83'
 API_PORT = 3000  
 API_URL = f'http://{API_IP}:{API_PORT}/check'
 API_TIMEOUT = 5
+CSV_DIR= "/home/pi/projeto/WiFinder/csv"
 
 
 def set_led_red():
@@ -62,17 +63,20 @@ def start_program(root):
     process = subprocess.Popen([terminal, "-e", "bash", "-c", "python3 analyzer.py 2> stderr.txt"])
     print("Programa iniciado!")
 
-def send_csvs(root):
+def send_csvs():
     try:
         response = requests.get(API_URL, timeout=API_TIMEOUT)
         if response.status_code == 200:
-            print("API is running successfully")
-            show_details(root)
-        
+            for file_name in os.listdir(CSV_DIR):
+                file_path = os.path.join(CSV_DIR, file_name)
+                if os.path.isfile(file_path):
+                    files = {
+                        'file': (file_name, open(file_path, 'rb'), 'text/csv')
+                    }
+                    requests.post(API_URL, files=files)
+
     except requests.exceptions.RequestException as e:
         print("Error occurred while connecting to the API:", e)
-
-    return
 
 
     
