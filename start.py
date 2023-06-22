@@ -133,7 +133,7 @@ def main():
     start_button.pack()
 
     # create and add a button labeled "Send CSV's"
-    send_csvs_button = tk.Button(root, text="Send CSV's", width=15, height=2, command=lambda: send_csvs(root))
+    send_csvs_button = tk.Button(root, text="Send CSV's", width=15, height=2, command=lambda: send_csvs())
     send_csvs_button.pack()
 
     # create and add a button labeled "About"
