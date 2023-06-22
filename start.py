@@ -5,6 +5,7 @@ import subprocess
 import tkinter as tk
 from PIL import Image, ImageTk #(do the import of the ImageTk module)
 import RPi.GPIO as GPIO 
+import requests
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -23,6 +24,10 @@ GPIO.setup(blue_pin, GPIO.OUT)
 
 #used to exit program
 process = None
+
+API_IP = '192.168.1.83' 
+API_PORT = 3000  
+API_URL = f'http://{API_IP}:{API_PORT}/check'
 
 
 def set_led_red():
@@ -57,7 +62,15 @@ def start_program(root):
     print("Programa iniciado!")
 
 def send_csvs(root):
-    show_details(root)
+    try:
+        response = requests.get(api_url)
+        if response.status_code == 200:
+            print("API is running successfully")
+            show_details(root)
+        
+    except requests.exceptions.RequestException as e:
+        print("Error occurred while connecting to the API:", e)
+
     return
 
 
@@ -133,6 +146,7 @@ def main():
     else: 
         set_led_red()
         
+    send_csvs(root)
 
     # Run the GUI event loop
     root.mainloop()

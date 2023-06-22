@@ -140,8 +140,8 @@ def main():
     os.rename(CSV_DIRECTORY + "/airodump-01.csv", CSV_DIRECTORY + "/" + filename)
       
     # Create a thread to remove unnecessary info (clients) from the csv file
-    #thread = threading.Thread(target=remove_clients_info_csv_file(filename))
-    #thread.start()
+    thread = threading.Thread(target=remove_clients_info_csv_file(CSV_DIRECTORY + "/" + filename))
+    thread.start()
 
     time.sleep(3)
 
