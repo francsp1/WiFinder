@@ -63,7 +63,7 @@ def start_program(root):
 
 def send_csvs(root):
     try:
-        response = requests.get(api_url)
+        response = requests.get(API_URL)
         if response.status_code == 200:
             print("API is running successfully")
             show_details(root)
