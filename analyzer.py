@@ -10,7 +10,7 @@ import threading
 SCAN_TIME = 60
 AIRCRACK_REPO_PATH = "/home/pi/projeto/aircrack-ng"
 WIFINDER_PATH      = "/home/pi/projeto/WiFinder"
-CSV_DIRECTORY      = "/home/pi/projeto/WiFinder/csv"
+CSV_DIR      = "/home/pi/projeto/WiFinder/csv"
 
 def install_dependencies():
     try:
@@ -82,9 +82,8 @@ def main():
 
     install_dependencies()
 
-    if not os.path.exists(CSV_DIRECTORY):
-        os.makedirs(CSV_DIRECTORY)
-
+    if not os.path.exists(CSV_DIR):
+        os.makedirs(CSV_DIR)
 
     if not os.path.isfile(os.path.join(WIFINDER_PATH, 'installed.txt')):
         
@@ -135,12 +134,12 @@ def main():
     time.sleep(SCAN_TIME)
  
     # Copy the airodump-ng file created via wifite from tmp directory to WiFinder csv's directory 
-    shutil.copy2(glob.glob('/tmp/wifite*/airodump-01.csv')[0], CSV_DIRECTORY)
+    shutil.copy2(glob.glob('/tmp/wifite*/airodump-01.csv')[0], CSV_DIR)
     filename = time.strftime("%d-%m-%Y_%H:%M:%S.csv")
-    os.rename(CSV_DIRECTORY + "/airodump-01.csv", CSV_DIRECTORY + "/" + filename)
+    os.rename(CSV_DIR + "/airodump-01.csv", CSV_DIR + "/" + filename)
       
     # Create a thread to remove unnecessary info (clients) from the csv file
-    thread = threading.Thread(target=remove_clients_info_csv_file(CSV_DIRECTORY + "/" + filename))
+    thread = threading.Thread(target=remove_clients_info_csv_file(CSV_DIR + "/" + filename))
     thread.start()
 
     time.sleep(3)

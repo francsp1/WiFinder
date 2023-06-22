@@ -10,17 +10,17 @@ import requests
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
-switch_pin = 14  #GPIO pin number of the switch 
-GPIO.setup(switch_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+SWITCH_PIN = 14  #GPIO pin number of the switch 
+GPIO.setup(SWITCH_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-red_pin = 22 #GPIO pin number of the red pin
-green_pin = 27 #GPIO pin number of the green pin
-blue_pin = 17 #GPIO pin number of the blue pin
+RED_PIN = 22 #GPIO pin number of the red pin
+GREEN_PIN = 27 #GPIO pin number of the green pin
+BLUE_PIN = 17 #GPIO pin number of the blue pin
 
 #set the GPIO pin out
-GPIO.setup(red_pin, GPIO.OUT) 
-GPIO.setup(green_pin, GPIO.OUT)
-GPIO.setup(blue_pin, GPIO.OUT)
+GPIO.setup(RED_PIN, GPIO.OUT) 
+GPIO.setup(GREEN_PIN, GPIO.OUT)
+GPIO.setup(BLUE_PIN, GPIO.OUT)
 
 #used to exit program
 process = None
@@ -30,23 +30,24 @@ API_PORT = 3000
 API_URL_CHECK = f'http://{API_IP}:{API_PORT}/check'
 API_URL_UPLOAD = f'http://{API_IP}:{API_PORT}/upload'
 API_TIMEOUT = 5
-CSV_DIR= "/home/pi/projeto/WiFinder/csv"
+CSV_DIR= '/home/pi/projeto/WiFinder/csv'
+SENT_CSV_DIR= '/home/pi/projeto/WiFinder/sent_csv'
 
 
 def set_led_red():
-    GPIO.output(red_pin, GPIO.HIGH)  # Turn on red color
-    GPIO.output(green_pin, GPIO.LOW)  # Turn off green color
-    GPIO.output(blue_pin, GPIO.LOW)  # Turn off blue color
+    GPIO.output(RED_PIN, GPIO.HIGH)  # Turn on red color
+    GPIO.output(GREEN_PIN, GPIO.LOW)  # Turn off green color
+    GPIO.output(BLUE_PIN, GPIO.LOW)  # Turn off blue color
 
 def set_led_yellow():
-    GPIO.output(red_pin, GPIO.HIGH)  # Turn on red color
-    GPIO.output(green_pin, GPIO.HIGH)  # Turn on green color
-    GPIO.output(blue_pin, GPIO.LOW)  # Turn off blue color
+    GPIO.output(RED_PIN, GPIO.HIGH)  # Turn on red color
+    GPIO.output(GREEN_PIN, GPIO.HIGH)  # Turn on green color
+    GPIO.output(BLUE_PIN, GPIO.LOW)  # Turn off blue color
     
 def set_led_green():
-    GPIO.output(red_pin, GPIO.LOW)  # Turn off red color
-    GPIO.output(green_pin, GPIO.HIGH)  # Turn on green color
-    GPIO.output(blue_pin, GPIO.LOW)  # Turn off blue color
+    GPIO.output(RED_PIN, GPIO.LOW)  # Turn off red color
+    GPIO.output(GREEN_PIN, GPIO.HIGH)  # Turn on green color
+    GPIO.output(BLUE_PIN, GPIO.LOW)  # Turn off blue color
 
 # Function that will be called when the button START is clicked
 def start_program(root):
@@ -105,7 +106,13 @@ def exit_program():
 
 def main():
 
-    
+    # CREATE csv directory if it does not exists
+    if not os.path.exists(CSV_DIR):
+        os.makedirs(CSV_DIR)
+
+    # CREATE sent_csv directory if it does not exists
+    if not os.path.exists(SENT_CSV_DIR):
+        os.makedirs(SENT_CSV_DIR)
 
     # Create the GUI window
     root = tk.Tk()
@@ -151,7 +158,7 @@ def main():
     exit_button.pack()
     
     #if the switch's on, led's green and the programm starts, else the programm doesn't start and the led stays red
-    if GPIO.input(switch_pin) == GPIO.HIGH: # ON 
+    if GPIO.input(SWITCH_PIN) == GPIO.HIGH: # ON 
         start_program(root)
         #set_led_green()
     else: 
