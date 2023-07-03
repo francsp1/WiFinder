@@ -26,13 +26,13 @@ GPIO.setup(BLUE_PIN, GPIO.OUT)
 #used to exit program
 process = None
 
-API_IP = '192.168.1.83' 
+API_IP = '192.168.1.159.231' 
 API_PORT = 3000  
 API_URL_CHECK = f'http://{API_IP}:{API_PORT}/check'
 API_URL_UPLOAD = f'http://{API_IP}:{API_PORT}/upload'
 API_TIMEOUT = 5
-CSV_DIR= '/home/pi/projeto/WiFinder/csv'
-SENT_CSV_DIR= '/home/pi/projeto/WiFinder/sent_csv'
+CSV_DIR      = '/home/pi/projeto/WiFinder/csv'
+SENT_CSV_DIR = '/home/pi/projeto/WiFinder/sent_csv'
 
 
 def set_led_red():
