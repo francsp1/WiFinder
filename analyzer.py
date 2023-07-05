@@ -125,7 +125,7 @@ def main():
         print("Aircrack-ng for WiFinder is installed!")
         time.sleep(2)
  
-    command = ["wifite", "--all", "--kill", "-i", "wlan-alfa", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only", "-pow", "25", "--wpat", "180", "-p", str(SCAN_TIME)]
+    command = ["wifite", "--all", "--kill", "-i", "wlan-alfa", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only", "-pow", "25", "--wpat", "180", "-p", str(SCAN_TIME), "-E" "Rede123"]
     # command = [WIFITE_PATH, "--all", "--kill", "--skip-crack", "--no-wps", "--no-pmkid", "--clients-only", "-pow", "25", "--wpat", "180", "-p", str(SCAN_TIME)]
 
     wifite_process = subprocess.Popen(command)
