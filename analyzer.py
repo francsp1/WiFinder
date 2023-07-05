@@ -7,7 +7,7 @@ import shutil
 from git import Repo
 import threading
 
-SCAN_TIME = 60
+SCAN_TIME = 180
 AIRCRACK_REPO_PATH = "/home/pi/projeto/aircrack-ng"
 WIFINDER_PATH      = "/home/pi/projeto/WiFinder"
 CSV_DIR            = "/home/pi/projeto/WiFinder/csv"
