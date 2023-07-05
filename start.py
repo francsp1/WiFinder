@@ -138,7 +138,7 @@ def main():
     # set the initial position 
     root.geometry(f"+0+35")
 
-    # Adds the WiFInder Logo
+    # Adds the WiFinder Logo
     logo_image = Image.open("assets/capturar.png")
     logo_photo = ImageTk.PhotoImage(logo_image)
     logo_label = tk.Label(root, image=logo_photo)
