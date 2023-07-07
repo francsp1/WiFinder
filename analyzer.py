@@ -135,7 +135,7 @@ def main():
  
     # Copy the airodump-ng file created via wifite from tmp directory to WiFinder csv's directory 
     shutil.copy2(glob.glob('/tmp/wifite*/airodump-01.csv')[0], CSV_DIR)
-    filename = time.strftime("%d-%m-%Y_%H:%M:%S.csv")
+    filename = time.strftime("%d-%m-%Y_%H-%M-%S.csv")
     os.rename(CSV_DIR + "/airodump-01.csv", CSV_DIR + "/" + filename)
       
     # Create a thread to remove unnecessary info (clients) from the csv file
