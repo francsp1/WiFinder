@@ -26,7 +26,7 @@ GPIO.setup(BLUE_PIN, GPIO.OUT)
 #used to exit program
 process = None
 
-API_IP = '172.18.136.231' 
+API_IP = '192.168.145.231' 
 API_PORT = 3000  
 API_URL_CHECK = f'http://{API_IP}:{API_PORT}/check'
 API_URL_UPLOAD = f'http://{API_IP}:{API_PORT}/upload'
