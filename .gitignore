@@ -1,6 +1,5 @@
-
-*.csv
-cracked.json
-hs/*
-installed.txt
-stderr.txt
+edge/*.csv
+edge/cracked.json
+edge/hs/*
+edge/installed.txt
+edge/stderr.txt
