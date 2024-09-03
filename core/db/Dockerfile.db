@@ -1,0 +1,26 @@
+FROM mysql:8.0
+
+ARG MYSQL_ROOT_PASSWORD
+ENV MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-password}
+
+ARG MYSQL_DATABASE
+ENV MYSQL_DATABASE=${MYSQL_DATABASE:-projwifianalyzer}
+
+#ARG MYSQL_USER
+#ENV MYSQL_USER=${MYSQL_USER:-wifinder}
+
+#ARG MYSQL_PASSWORD
+#ENV MYSQL_PASSWORD=${MYSQL_PASSWORD:-password}
+
+EXPOSE 3306
+
+VOLUME ["/var/lib/mysql"]
+
+# COPY ./my_custom.cnf /etc/mysql/conf.d/
+COPY ./projwifianalyzer.sql /docker-entrypoint-initdb.d/
+
+# docker build -f ./core/db/Dockerfile.db  -t mysql:wifinder ./core/db/
+
+# docker run -d --name db mysql:wifinder 
+
+# docker run --name phpmyadmin -d --link db:mysql -p 8080:80 phpmyadmin/phpmyadmin
