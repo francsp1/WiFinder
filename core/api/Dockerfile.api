@@ -16,17 +16,21 @@ RUN adduser -h /var/api \
 WORKDIR /var/api
 
 COPY package*.json ./
-COPY api.js .
 
-RUN npm install
+COPY api.js ./src/
+
+#RUN npm install
 
 RUN chown -R api:api /var/api
 
 USER api
 
-CMD [ "node", "api.js" ]
+#CMD [ "node", "./src/api.js" ]
+
+ENTRYPOINT [ "" ]
+CMD [ "/bin/sh" ]
 
 # docker build -f ./core/api/Dockerfile.api -t wifinder:api ./core/api/
 
-# docker run .d --name api --network wifinder-test -v /home/ubuntu/repos/WiFinder/core/api/api.js:/var/api/api.js wifinder:api
+# docker run --name api --network wifinder-test -v /home/ubuntu/repos/WiFinder/core/api/api.js:/var/api/api.js wifinder:api
 

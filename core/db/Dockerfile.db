@@ -26,6 +26,6 @@ HEALTHCHECK --interval=5s --timeout=5s --start-period=1s --retries=3 \
 
 # docker run -d --name db wifinder:db 
 # docker exec -it db bash
-# docker run --name api --network wifinder-test  wifinder:api 
+# docker run --name db --network wifinder-test  wifinder:db
 
 # docker run --name phpmyadmin -d --link db:mysql -p 8080:80 phpmyadmin/phpmyadmin
