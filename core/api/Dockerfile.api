@@ -1,0 +1,32 @@
+FROM node:22-alpine3.19
+
+RUN apk add curl
+
+ARG PORT
+ENV PORT=${PORT:-3000}
+EXPOSE ${PORT}
+
+HEALTHCHECK --interval=1s \
+        CMD curl -sf http://localhost:${PORT}/check || exit 1
+
+VOLUME [ "/var/api" ]
+
+RUN adduser -h /var/api \
+        -s /bin/sh \
+        -D api 
+
+WORKDIR /var/api
+
+COPY package*.json ./
+COPY api.js .
+
+RUN npm install
+
+RUN chown -R api:api /var/api
+
+USER api
+
+CMD [ "node", "api.js" ]
+
+# docker build -f ./core/api/Dockerfile.api -t wifinder:api ./core/api/
+# docker run -it --name api --network wifinder-test -u root wifinder:api /bin/sh

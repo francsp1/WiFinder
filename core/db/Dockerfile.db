@@ -19,8 +19,13 @@ VOLUME ["/var/lib/mysql"]
 # COPY ./my_custom.cnf /etc/mysql/conf.d/
 COPY ./projwifianalyzer.sql /docker-entrypoint-initdb.d/
 
-# docker build -f ./core/db/Dockerfile.db  -t mysql:wifinder ./core/db/
+HEALTHCHECK --interval=5s --timeout=5s --start-period=1s --retries=3 \
+  CMD mysqladmin ping -h 127.0.0.1 -uroot -p$MYSQL_ROOT_PASSWORD || exit 1
 
-# docker run -d --name db mysql:wifinder 
+# docker build -f ./core/db/Dockerfile.db  -t wifinder:db ./core/db/
+
+# docker run -d --name db wifinder:db 
+# docker exec -it db bash
+# docker run --name api --network wifinder-test  wifinder:api 
 
 # docker run --name phpmyadmin -d --link db:mysql -p 8080:80 phpmyadmin/phpmyadmin
