@@ -9,8 +9,6 @@ EXPOSE ${PORT}
 HEALTHCHECK --interval=1s \
         CMD curl -sf http://localhost:${PORT}/check || exit 1
 
-VOLUME [ "/var/api" ]
-
 RUN adduser -h /var/api \
         -s /bin/sh \
         -D api 
@@ -29,4 +27,6 @@ USER api
 CMD [ "node", "api.js" ]
 
 # docker build -f ./core/api/Dockerfile.api -t wifinder:api ./core/api/
-# docker run -it --name api --network wifinder-test -u root wifinder:api /bin/sh
+
+# docker run .d --name api --network wifinder-test -v /home/ubuntu/repos/WiFinder/core/api/api.js:/var/api/api.js wifinder:api
+
