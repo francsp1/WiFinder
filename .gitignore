@@ -4,4 +4,4 @@ edge/hs/*
 edge/installed.txt
 edge/stderr.txt
 
-core/api/node_modules/*
+core/api/node_modules/
