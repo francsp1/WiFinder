@@ -1,6 +1,8 @@
 FROM node:22-alpine3.19
 
-RUN apk add curl
+RUN apk add --no-cache curl && \
+    apk add --no-cache bash
+RUN npm install -g nodemon
 
 ARG PORT
 ENV PORT=${PORT:-3000}
@@ -15,9 +17,7 @@ RUN adduser -h /var/api \
 
 WORKDIR /var/api
 
-COPY package*.json ./
-
-COPY api.js ./src/
+#COPY . .
 
 #RUN npm install
 
@@ -25,12 +25,11 @@ RUN chown -R api:api /var/api
 
 USER api
 
-#CMD [ "node", "./src/api.js" ]
-
 ENTRYPOINT [ "" ]
-CMD [ "/bin/sh" ]
+CMD [ "nodemon", "node", "./api.js" ]
+
 
 # docker build -f ./core/api/Dockerfile.api -t wifinder:api ./core/api/
 
-# docker run --name api --network wifinder-test -v /home/ubuntu/repos/WiFinder/core/api/api.js:/var/api/api.js wifinder:api
+# docker run --name api --network wifinder-test -v /home/ubuntu/repos/WiFinder/core/api/:/var/api/ wifinder:api
 
