@@ -1,0 +1,61 @@
+services:
+
+  db:
+    container_name: db
+    build: 
+      context: ./core/db/
+      dockerfile: Dockerfile.db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: projwifianalyzer
+    networks:
+      - db_network
+    volumes:
+      - db_volume:/var/lib/mysql
+    deploy:
+      replicas: 1
+      
+  api:
+    container_name: api
+    build:
+      context: ./core/api/
+      dockerfile: Dockerfile.api
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+    networks:
+      - db_network
+      - api_network
+    volumes:
+      - ./core/api:/var/api
+    deploy:
+      replicas: 1
+    depends_on:
+      db:
+        condition: service_healthy
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    networks:
+      - db_network
+    deploy:
+      replicas: 1
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db_volume:
+
+networks:
+  db_network:
+  api_network:

@@ -1,14 +1,13 @@
 FROM node:22-alpine3.19
 
-RUN apk add --no-cache curl && \
-    apk add --no-cache bash
-RUN npm install -g nodemon
+RUN apk add --no-cache curl bash && \
+    npm install -g nodemon
 
 ARG PORT
 ENV PORT=${PORT:-3000}
 EXPOSE ${PORT}
 
-HEALTHCHECK --interval=1s \
+HEALTHCHECK --interval=5s --timeout=5s --start-period=1s --retries=3 \
         CMD curl -sf http://localhost:${PORT}/check || exit 1
 
 RUN adduser -h /var/api \
@@ -26,7 +25,7 @@ RUN chown -R api:api /var/api
 USER api
 
 ENTRYPOINT [ "" ]
-CMD [ "nodemon", "node", "./api.js" ]
+CMD [ "nodemon", "./api.js" ]
 
 
 # docker build -f ./core/api/Dockerfile.api -t wifinder:api ./core/api/
